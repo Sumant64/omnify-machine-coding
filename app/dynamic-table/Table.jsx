@@ -70,7 +70,7 @@ const Table = () => {
         <div className='m-4'>
             <h1>Dynamic Table</h1>
             <div className='text-right'>
-                <input className='border-2 ' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
+                <input className='border-2 rounded-xl p-[6px]' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
 
             </div>
             <div style={{ position: 'relative' }}>
@@ -88,19 +88,19 @@ const Table = () => {
                 </div>
             </div>
             <div className='flex justify-center'>
-                <div className='w-[90%] overflow-auto'>
+                <div className='w-[100%] overflow-auto'>
 
                     {
                         !loading &&
-                        <table className='border-2  w-full mt-3'>
-                            <thead className='border-2 pt-5 pb-5 text-start'>
+                        <table className='rounded-xl border-2 w-full mt-3'>
+                            <thead className='border-b-2 text-start'>
                                 <tr>
                                     {
                                         Object.keys(columns).map((item) => {
 
                                             if (columns[item]) {
                                                 return (
-                                                    <th className='text-start'>{item}</th>
+                                                    <th className='text-start p-2 bg-slate-100'>{item}</th>
                                                 )
 
                                             }
@@ -114,8 +114,8 @@ const Table = () => {
                                     rows.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage).map((item) => {
 
                                         return (
-                                            <tr className='pt-2 border-b-2'>
-                                                <td>{item.id}</td>
+                                            <tr className='border-b-2'>
+                                                <td className='p-2'>{item.id}</td>
                                                 {columns['Created On'] && <td className='w-[300px]'>{item.createdOn}</td>}
                                                 {columns['Payer'] && <td className='w-[300px]'>{item.payer}</td>}
                                                 {columns['Status'] && <td className='w-[300px]'>{item.status}</td>}
@@ -134,21 +134,25 @@ const Table = () => {
 
             </div>
 
-            <div>
+            <div className='flex justify-between'>
+                <div className="rows">
+                    
+                </div>
+
                 {
                     rows.length > 0 &&
                     <div className='p-[10px] mt-[10px] mb-[10px] flex justify-center'>
-                        <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3'>Prev</span>
+                        <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3 cursor-pointer'>Prev</span>
                         {
                             [...Array(rows.length / rowsPerPage)].map((_, i) => {
-                                if(i === page - 1 || i === page || i === page + 1){
+                                if(i === (page-1) - 1 || i === (page-1) || i === (page-1) + 1){
                                 return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i+1 ? 'bg-[#e2e2e2]': ''}`}>
                                     {i + 1}
                                 </span>
                                 }
                             })
                         }
-                        <span onClick={() => selectPageHandler(page + 1)} className='border-2 p-3'>Next</span>
+                        <span onClick={() => selectPageHandler(page + 1)} className='border-2 p-3 cursor-pointer'>Next</span>
                     </div>
                 }
             </div>
