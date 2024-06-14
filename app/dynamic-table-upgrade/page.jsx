@@ -111,10 +111,14 @@ const DynamicTableUpgrade = () => {
 
     return (
         <div className='m-4'>
-            <h1>Dynamic Table</h1>
-            <div className='text-right'>
+            <h1 className='text-3xl font-bold'>Waitlist</h1>
+            <div className='flex gap-4 mt-5'>
+                <p className='border-2 flex-1 p-3 rounded-xl'>All Waitlist <span>100</span></p>
+                <p className='border-2 flex-1 p-3 rounded-xl'>Newly Added <span>50</span></p>
+                <p className='border-2 flex-1 p-3 rounded-xl'>Leads <span>20</span></p>
+            </div>
+            <div className='text-right mt-4'>
                 <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
-
             </div>
             <div className='relative'>
                 <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
