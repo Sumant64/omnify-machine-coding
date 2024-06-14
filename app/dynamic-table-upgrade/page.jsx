@@ -173,7 +173,6 @@ const DynamicTableUpgrade = () => {
                         </table>
                     }
                 </div>
-
             </div>
 
             <div className='flex justify-between'>
@@ -182,11 +181,11 @@ const DynamicTableUpgrade = () => {
                 </div>
 
                 {
-                    rows.length > 0 &&
+                    rows.length > 0 && !loading &&
                     <div className='p-[10px] mt-[10px] mb-[10px] flex justify-center'>
                         <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3 cursor-pointer'>Prev</span>
                         {
-                            [...Array(rows.length / rowsPerPage)].map((_, i) => {
+                            [...Array(Math.ceil(rows.length / rowsPerPage))].map((_, i) => {
                                 if(i === (page-1) - 1 || i === (page-1) || i === (page-1) + 1){
                                 return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i+1 ? 'bg-[#e2e2e2]': ''}`}>
                                     {i + 1}
