@@ -62,7 +62,6 @@ const DynamicTableUpgrade = () => {
     }, []);
 
     const handleColumn = (item) => {
-        console.log(item)
         setLoading(true);
         let newCols = columns;
         if (item.display) {
@@ -91,7 +90,6 @@ const DynamicTableUpgrade = () => {
         setLoading(true);
         setSearchClient(event.target.value);
         if (event.target.value) {
-            console.log(event.target.value)
             let searchRows = mydata.filter((item) => {
                 let regex = new RegExp(event.target.value, "i", "g")
                 return item.payer.toString().match(regex)
@@ -118,14 +116,24 @@ const DynamicTableUpgrade = () => {
                 <input className='border-2 rounded-xl p-[6px]' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
 
             </div>
-            <div style={{ position: 'relative' }}>
-                <button onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                <div className={`border-2 bg-[#fff] shadow-lg absolute ${dialog ? 'block' : 'hidden'}`}>
+            <div className='relative'>
+                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
+                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
                     {
                         columnData.map((item) => {
+                            let active = columns.filter((col) => col.field === item.field);
+                            {/* console.log(active[0].display) */}
+                            active = active[0].display
                             return (
-                                <div onClick={() => handleColumn(item)}>
-                                    {item.field}
+                                <div className='flex gap-2'>
+                                    <div className="check relative top-2">
+                                        {
+                                            active ? 'T' : 'F'
+                                        }
+                                    </div>
+                                    <div className='border-[1px] m-1 pl-3 rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
+                                        {item.field}
+                                    </div>
                                 </div>
                             )
                         })
@@ -158,13 +166,13 @@ const DynamicTableUpgrade = () => {
                                         return (
                                             <tr className='border-b-2'>
                                                 <td className='p-2'>{item.id}</td>
-                                                {columns[0].display && <td className='w-[300px]'>{item.createdOn}</td>}
-                                                {columns[1].display && <td className='w-[300px]'>{item.payer}</td>}
-                                                {columns[2].display && <td className='w-[300px]'>{item.status}</td>}
-                                                {columns[3].display && <td className='w-[300px]'>{item.email}</td>}
-                                                {columns[4].display && <td className='w-[300px]'>{item.services}</td>}
-                                                {columns[5].display && <td className='w-[300px] pr-2'>{item.scheduled}</td>}
-                                                {columns[6].display && <td className='w-[300px]'>{item.payerPhone}</td>}
+                                                {columns[1].display && <td className='w-[300px]'>{item.createdOn}</td>}
+                                                {columns[2].display && <td className='w-[300px]'>{item.payer}</td>}
+                                                {columns[3].display && <td className='w-[300px]'>{item.status}</td>}
+                                                {columns[4].display && <td className='w-[300px]'>{item.email}</td>}
+                                                {columns[5].display && <td className='w-[300px]'>{item.services}</td>}
+                                                {columns[6].display && <td className='w-[300px] pr-2'>{item.scheduled}</td>}
+                                                {columns[7].display && <td className='w-[300px]'>{item.payerPhone}</td>}
                                             </tr>
                                         )
                                     })
