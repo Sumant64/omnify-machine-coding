@@ -113,7 +113,7 @@ const DynamicTableUpgrade = () => {
         <div className='m-4'>
             <h1>Dynamic Table</h1>
             <div className='text-right'>
-                <input className='border-2 rounded-xl p-[6px]' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
+                <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
 
             </div>
             <div className='relative'>
@@ -184,13 +184,19 @@ const DynamicTableUpgrade = () => {
             </div>
 
             <div className='flex justify-between'>
-                <div className="rows">
-                    
+                <div className="rows mt-3">
+                    Display 
+                    <select value={rowsPerPage.toString()} onChange={(event) => setRowsPerPage(+event.target.value)}>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    out of {rows.length}
                 </div>
 
                 {
                     rows.length > 0 && !loading &&
-                    <div className='p-[10px] mt-[10px] mb-[10px] flex justify-center'>
+                    <div className='p-[10px] mb-[10px] flex justify-center'>
                         <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3 cursor-pointer'>Prev</span>
                         {
                             [...Array(Math.ceil(rows.length / rowsPerPage))].map((_, i) => {
