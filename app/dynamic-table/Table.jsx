@@ -4,6 +4,7 @@ import mydata from '../../data/data.json';
 import './style.css';
 
 const columnData = {
+    'ID': true,
     'Created On': true,
     'Payer': true,
     'Status': true,
@@ -19,12 +20,12 @@ const Table = () => {
     const [dialog, setDialog] = useState(false);
     const [loading, setLoading] = useState(false);
     const [searchClient, setSearchClient] = useState('');
+    const [page, setPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
 
     useEffect(() => {
-
-
 
     }, []);
 
@@ -56,6 +57,12 @@ const Table = () => {
         }
 
         setLoading(false);
+    }
+
+    const selectPageHandler = (selectPage) => {
+        if(selectPage >= 1 && selectPage <= rows.length / rowsPerPage && selectPage !== page) {
+            setPage(selectPage);
+        }
     }
 
 
@@ -104,10 +111,11 @@ const Table = () => {
                             </thead>
                             <tbody>
                                 {
-                                    rows.map((item) => {
+                                    rows.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage).map((item) => {
 
                                         return (
                                             <tr className='pt-2 border-b-2'>
+                                                <td>{item.id}</td>
                                                 {columns['Created On'] && <td className='w-[300px]'>{item.createdOn}</td>}
                                                 {columns['Payer'] && <td className='w-[300px]'>{item.payer}</td>}
                                                 {columns['Status'] && <td className='w-[300px]'>{item.status}</td>}
@@ -124,6 +132,25 @@ const Table = () => {
                     }
                 </div>
 
+            </div>
+
+            <div>
+                {
+                    rows.length > 0 &&
+                    <div className='p-[10px] mt-[10px] mb-[10px] flex justify-center'>
+                        <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3'>Prev</span>
+                        {
+                            [...Array(rows.length / rowsPerPage)].map((_, i) => {
+                                if(i === page - 1 || i === page || i === page + 1){
+                                return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i+1 ? 'bg-[#e2e2e2]': ''}`}>
+                                    {i + 1}
+                                </span>
+                                }
+                            })
+                        }
+                        <span onClick={() => selectPageHandler(page + 1)} className='border-2 p-3'>Next</span>
+                    </div>
+                }
             </div>
         </div>
     )
