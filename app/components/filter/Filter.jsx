@@ -8,8 +8,10 @@ import { updateFilters } from '@/redux/actions/filterAction';
 const Filter = () => {
   const [selection, setSelection] = useState(1);
   const [selectedPeople, setSelectedPeople] = useState([]);
+  const [scheduledDate, setScheduledDate] = useState({from: '', to: '', field: ''})
   const peopleFilter = useSelector((state) => state.filterReducer.filters.people);
   const dispatch = useDispatch();
+
 
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const Filter = () => {
   const getActiveFilter = () => {
     switch(selection){
       case 1:
-        return <ScheduledDate />
+        return <ScheduledDate scheduledDate={scheduledDate} setScheduledDate={setScheduledDate} />
       case 2:
         return <People selectedPeople={selectedPeople} setSelectedPeople={setSelectedPeople} />
       case 3:
@@ -29,7 +31,8 @@ const Filter = () => {
 
   const applyFilter = () => {
     let filterList = {
-      people: selectedPeople
+      people: selectedPeople,
+      scheduledDate: [scheduledDate.from, scheduledDate.to, scheduledDate.field]
     }
 
     dispatch(updateFilters(filterList))
