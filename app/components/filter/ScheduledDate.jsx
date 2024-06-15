@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
   const [dateDropdown, setDateDropdown] = useState('');
+  const [customDate, setCustomDate] = useState({from: '', to: ''});
+  const [isCustom, setIsCustom] = useState(false)
   const scheduledDateFilter = useSelector((state) => state.filterReducer.filters.scheduledDate);
 
   useEffect(() => {
@@ -22,6 +24,9 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
     switch(option) {
       case 'All':
         setScheduledDate({from: '', to: '', field: 'All'})
+        break;
+      case 'Custom':
+        setIsCustom(true);
         break;
       case '30Days':
         to = new Date();
@@ -61,6 +66,7 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
     <div>
       <select value={dateDropdown} onChange={(event) => handleChange(event.target.value)}>
         <option value="All">All</option>
+        <option value="Custom">Custom</option>
         <option value="30Days">Last 30 Days</option>
         <option value="ThisMonth">This month</option>
         <option value="LastMonth">Last month</option>
@@ -69,6 +75,17 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
         <option value="ThisYear">This Year</option>
         <option value="LastYear">Last Year</option>
       </select>
+
+      { isCustom && <div className="custom">
+        <input placeholder='From' type="date" value={customDate.from} onChange={(event) => {
+          setCustomDate({...customDate, from: event.target.value});
+          setScheduledDate({from: event.target.value, to: customDate.to, field: 'Custom'})
+        }} />
+        <input placeholder='To' type="date" value={customDate.to} onChange={(event) => {
+          setCustomDate({...customDate, to: event.target.value});
+          setScheduledDate({from: customDate.from, to: event.target.value, field: 'Custom'})
+        }} />
+      </div>}
     </div>
   )
 }
