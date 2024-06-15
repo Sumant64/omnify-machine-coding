@@ -108,9 +108,15 @@ const DynamicTableUpgrade = () => {
         }
     }
 
+    const handleDialogCloseOutside = () => {
+        if(dialog === true) {
+            setDialog(false)
+        }
+    }
+
 
     return (
-        <div className='m-4'>
+        <div className='m-4' onClick={() => handleDialogCloseOutside()}>
             <h1 className='text-3xl font-bold'>Waitlist</h1>
             <div className='flex gap-4 mt-5'>
                 <p className='border-2 flex-1 p-3 rounded-xl'>All Waitlist <span>100</span></p>
@@ -165,18 +171,18 @@ const DynamicTableUpgrade = () => {
                             </thead>
                             <tbody>
                                 {
-                                    rows.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage).map((item) => {
+                                    rows.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage).map((item, index) => {
 
                                         return (
-                                            <tr className='border-b-2'>
+                                            <tr className={`border-b-2 ${index % 2 === 0 && 'bg-slate-50'}`}>
                                                 <td className='p-2'>{item.id}</td>
-                                                {columns[1].display && <td className='w-[300px]'>{item.createdOn}</td>}
-                                                {columns[2].display && <td className='w-[300px]'>{item.payer}</td>}
-                                                {columns[3].display && <td className='w-[300px]'>{item.status}</td>}
-                                                {columns[4].display && <td className='w-[300px]'>{item.email}</td>}
-                                                {columns[5].display && <td className='w-[300px]'>{item.services}</td>}
-                                                {columns[6].display && <td className='w-[300px] pr-2'>{item.scheduled}</td>}
-                                                {columns[7].display && <td className='w-[300px]'>{item.payerPhone}</td>}
+                                                {columns[1].display && <td className='min-w-[300px]'>{item.createdOn}</td>}
+                                                {columns[2].display && <td className='min-w-[250px]'>{item.payer}</td>}
+                                                {columns[3].display && <td className='min-w-[150px]'>{item.status}</td>}
+                                                {columns[4].display && <td className='min-w-[250px]'>{item.email}</td>}
+                                                {columns[5].display && <td className='min-w-[250px]'>{item.services}</td>}
+                                                {columns[6].display && <td className='min-w-[250px] pr-2'>{item.scheduled}</td>}
+                                                {columns[7].display && <td className='min-w-[250px]'>{item.payerPhone}</td>}
                                             </tr>
                                         )
                                     })
