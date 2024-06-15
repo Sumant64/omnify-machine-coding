@@ -54,6 +54,7 @@ const DynamicTableUpgrade = () => {
     const [searchClient, setSearchClient] = useState('');
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [mounseUnderDialog, setMouseUnderDialog] = useState(false);
 
 
 
@@ -109,7 +110,7 @@ const DynamicTableUpgrade = () => {
     }
 
     const handleDialogCloseOutside = () => {
-        if(dialog === true) {
+        if(dialog === true && mounseUnderDialog === false) {
             setDialog(false)
         }
     }
@@ -128,11 +129,10 @@ const DynamicTableUpgrade = () => {
             </div>
             <div className='relative'>
                 <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
+                <div onMouseEnter={() => setMouseUnderDialog(true)} onMouseLeave={() => setMouseUnderDialog(false)} className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
                     {
                         columnData.map((item) => {
                             let active = columns.filter((col) => col.field === item.field);
-                            {/* console.log(active[0].display) */}
                             active = active[0].display
                             return (
                                 <div className='flex gap-2'>
@@ -141,7 +141,7 @@ const DynamicTableUpgrade = () => {
                                             active ? 'T' : 'F'
                                         }
                                     </div>
-                                    <div className='border-[1px] m-1 pl-3 rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
+                                    <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
                                         {item.field}
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@ const DynamicTableUpgrade = () => {
             <div className='flex justify-between'>
                 <div className="rows mt-3">
                     Display 
-                    <select value={rowsPerPage.toString()} onChange={(event) => setRowsPerPage(+event.target.value)}>
+                    <select value={rowsPerPage.toString()} onChange={(event) => {setRowsPerPage(+event.target.value); setPage(1)}}>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
