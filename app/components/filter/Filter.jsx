@@ -1,24 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ScheduledDate from './ScheduledDate';
 import People from './People';
 import ServiceProducts from './ServiceProducts';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateFilters } from '@/redux/actions/filterAction';
 
 const Filter = () => {
   const [selection, setSelection] = useState(1);
+  const [selectedPeople, setSelectedPeople] = useState([]);
+  const peopleFilter = useSelector((state) => state.filterReducer.filters.people);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    setSelectedPeople(peopleFilter)
+  }, [])
 
   const getActiveFilter = () => {
     switch(selection){
       case 1:
         return <ScheduledDate />
       case 2:
-        return <People />
+        return <People selectedPeople={selectedPeople} setSelectedPeople={setSelectedPeople} />
       case 3:
         return <ServiceProducts />
     }
   }
 
+  const applyFilter = () => {
+    let filterList = {
+      people: selectedPeople
+    }
+
+    dispatch(updateFilters(filterList))
+  }
+
   return (
-    <div className='h-[350px] w-[700px]'>
+    <div className='h-[400px] w-[700px]'>
       <div className='flex h-[350px] w-[700px]'>
       {/* Left side */}
         <div className='w-[200px] bg-slate-50 p-3 border-r-2'>
@@ -29,14 +47,17 @@ const Filter = () => {
           </div>
         </div>
         {/* right side */}
-        <div className="right w-[500px]">
+        <div className="right w-[500px] overflow-auto">
           {getActiveFilter()}
         </div>
       </div>
 
       {/* footer */}
-      <div className="footer">
-
+      <div className="footer border-t-2 flex justify-end">
+        <div className=''>
+          <button className='border-2 p-1 pl-4 pr-4 rounded-md'>Reset to Default</button>
+          <button onClick={() => applyFilter()} className='border-2 p-1 pl-4 pr-4 bg-black text-white ml-3 rounded-md'>Apply</button>
+        </div>
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import mydata from '../../data/data.json';
 import '../dynamic-table/style.css';
 import Filter from '../components/filter/Filter';
+import { useSelector } from 'react-redux';
 
 const columnData = [
     {
@@ -48,7 +49,7 @@ const columnData = [
 ]
 
 const DynamicTableUpgrade = () => {
-    const [rows, setRows] = useState(mydata);
+    const [rows, setRows] = useState([]);
     const [columns, setColumns] = useState(columnData);
     const [dialog, setDialog] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -56,17 +57,26 @@ const DynamicTableUpgrade = () => {
     const [searchClient, setSearchClient] = useState('');
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    // const [mounseUnderDialog, setMouseUnderDialog] = useState(false);
-
-
+    const peopleFilter = useSelector((state) => state.filterReducer.filters.people);
 
     useEffect(() => {
+        loadInitial();
+    }, [peopleFilter]);
 
-    }, []);
+    const loadInitial = () => {
+        let data = mydata;
+        if(peopleFilter.length > 0) {
+            data = data.filter((item) => {
+                return peopleFilter.includes(item.payer);
+            })
+
+        }
+
+        setRows(data);
+    }
 
     const handleColumn = (item) => {
         setLoading(true);
-        let newCols = columns;
         if (item.display) {
             setColumns(columns.map((val) => {
                 if(val.field === item.field){
@@ -89,19 +99,18 @@ const DynamicTableUpgrade = () => {
         setLoading(false);
     }
 
-    const handleSearch = (event) => {
+    const handleSearch = (searchValue) => {
         setLoading(true);
-        setSearchClient(event.target.value);
-        if (event.target.value) {
+        setSearchClient(searchValue);
+        if (searchValue) {
             let searchRows = mydata.filter((item) => {
-                let regex = new RegExp(event.target.value, "i", "g")
+                let regex = new RegExp(searchValue, "i", "g");
                 return item.payer.toString().match(regex)
             })
             setRows([...searchRows])
         } else {
             setRows(mydata)
         }
-
         setLoading(false);
     }
 
@@ -127,13 +136,13 @@ const DynamicTableUpgrade = () => {
                 <p className='border-2 flex-1 p-3 rounded-xl'>Leads <span>20</span></p>
             </div>
             <div className='text-right mt-4'>
-                <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
+                <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event.target.value)} />
             </div>
 
             {/* filters */}
             <div className="filters flex justify-between mt-4">
                 <div className="filters">
-                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setFilterDialog(!filterDialog)}>Filters</button>
+                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => {setFilterDialog(!filterDialog); setSearchClient('')}}>Filters</button>
                 <div className={`border-2 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
                     <Filter />
                 </div>
