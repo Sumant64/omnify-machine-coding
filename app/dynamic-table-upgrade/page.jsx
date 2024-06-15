@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import mydata from '../../data/data.json';
 import '../dynamic-table/style.css';
+import Filter from '../components/filter/Filter';
 
 const columnData = [
     {
@@ -51,6 +52,7 @@ const DynamicTableUpgrade = () => {
     const [columns, setColumns] = useState(columnData);
     const [dialog, setDialog] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [filterDialog, setFilterDialog] = useState(false);
     const [searchClient, setSearchClient] = useState('');
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -127,28 +129,39 @@ const DynamicTableUpgrade = () => {
             <div className='text-right mt-4'>
                 <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event)} />
             </div>
-            <div className='relative'>
-                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
-                    {
-                        columnData.map((item) => {
-                            let active = columns.filter((col) => col.field === item.field);
-                            active = active[0].display
-                            return (
-                                <div className='flex gap-2'>
-                                    <div className="check relative top-2">
-                                        {
-                                            active ? 'T' : 'F'
-                                        }
-                                    </div>
-                                    <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
-                                        {item.field}
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+
+            {/* filters */}
+            <div className="filters flex justify-between mt-4">
+                <div className="filters">
+                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setFilterDialog(!filterDialog)}>Filters</button>
+                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${filterDialog ? 'block' : 'hidden'}`}>
+                    <Filter />
                 </div>
+                </div>
+                <div className='relative'>
+                    <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
+                    <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
+                        {
+                            columnData.map((item) => {
+                                let active = columns.filter((col) => col.field === item.field);
+                                active = active[0].display
+                                return (
+                                    <div className='flex gap-2'>
+                                        <div className="check relative top-2">
+                                            {
+                                                active ? 'T' : 'F'
+                                            }
+                                        </div>
+                                        <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
+                                            {item.field}
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
             </div>
             <div className='flex justify-center'>
                 <div className='w-[100%] overflow-auto'>
