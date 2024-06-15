@@ -22,7 +22,6 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
         let filterData = selectedPeople.filter((val) => {
             return val !== item
         })
-
         setSelectedPeople(filterData)
     }
 
