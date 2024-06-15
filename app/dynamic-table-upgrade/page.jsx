@@ -134,7 +134,7 @@ const DynamicTableUpgrade = () => {
             <div className="filters flex justify-between mt-4">
                 <div className="filters">
                 <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setFilterDialog(!filterDialog)}>Filters</button>
-                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${filterDialog ? 'block' : 'hidden'}`}>
+                <div className={`border-2 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
                     <Filter />
                 </div>
                 </div>
