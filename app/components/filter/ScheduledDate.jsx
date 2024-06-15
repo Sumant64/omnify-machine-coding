@@ -16,20 +16,42 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
   }, [])
 
   const handleChange = (option) => {
+    let from = '';
+    let to = '';
     setDateDropdown(option)
-    console.log(option)
     switch(option) {
       case 'All':
         setScheduledDate({from: '', to: '', field: 'All'})
         break;
       case '30Days':
-
+        to = new Date();
+        from = new Date().setDate(to.getDate() - 30);
+        from = new Date(from);
+        setScheduledDate({from, to, field: '30Days'});
         break;
       case 'ThisMonth':
-        let from = new Date().setDate(1);
+        from = new Date().setDate(1);
         from = new Date(from);
-        let to = new Date();
+        to = new Date();
         setScheduledDate({from, to, field: 'ThisMonth'})
+        break;
+      case 'LastMonth':
+        break;
+      case 'ThisQuarter':
+        break;
+      case '2QuarterAgo':
+        break;
+      case 'ThisYear':
+        let currentYr = new Date().getFullYear();
+        to = new Date(`01-01-${currentYr}`)
+        from = new Date(`12-31-${currentYr}`);
+        setScheduledDate({from, to, field: 'ThisYear'});
+        break;
+      case 'LastYear':
+        let yr = new Date().getFullYear() - 1;
+        to = new Date(`01-01-${yr}`)
+        from = new Date(`12-31-${yr}`);
+        setScheduledDate({from, to, field: 'LastYear'})
         break;
     }
   }
@@ -40,7 +62,12 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
       <select value={dateDropdown} onChange={(event) => handleChange(event.target.value)}>
         <option value="All">All</option>
         <option value="30Days">Last 30 Days</option>
-        <option value="ThisMonth">This Month</option>
+        <option value="ThisMonth">This month</option>
+        <option value="LastMonth">Last month</option>
+        <option value="ThisQuarter">This quarter</option>
+        <option value="2QuarterAgo">2 quarter ago</option>
+        <option value="ThisYear">This Year</option>
+        <option value="LastYear">Last Year</option>
       </select>
     </div>
   )
