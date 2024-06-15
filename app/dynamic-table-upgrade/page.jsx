@@ -54,7 +54,7 @@ const DynamicTableUpgrade = () => {
     const [searchClient, setSearchClient] = useState('');
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [mounseUnderDialog, setMouseUnderDialog] = useState(false);
+    // const [mounseUnderDialog, setMouseUnderDialog] = useState(false);
 
 
 
@@ -109,15 +109,15 @@ const DynamicTableUpgrade = () => {
         }
     }
 
-    const handleDialogCloseOutside = () => {
-        if(dialog === true && mounseUnderDialog === false) {
-            setDialog(false)
-        }
-    }
+    // const handleDialogCloseOutside = () => {
+    //     if(dialog === true && mounseUnderDialog === false) {
+    //         setDialog(false)
+    //     }
+    // }
 
 
     return (
-        <div className='m-4' onClick={() => handleDialogCloseOutside()}>
+        <div className='m-4'>
             <h1 className='text-3xl font-bold'>Waitlist</h1>
             <div className='flex gap-4 mt-5'>
                 <p className='border-2 flex-1 p-3 rounded-xl'>All Waitlist <span>100</span></p>
@@ -129,7 +129,7 @@ const DynamicTableUpgrade = () => {
             </div>
             <div className='relative'>
                 <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                <div onMouseEnter={() => setMouseUnderDialog(true)} onMouseLeave={() => setMouseUnderDialog(false)} className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
+                <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
                     {
                         columnData.map((item) => {
                             let active = columns.filter((col) => col.field === item.field);
