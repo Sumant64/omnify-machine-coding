@@ -140,7 +140,7 @@ const DynamicTableUpgrade = () => {
                 </div>
                 <div className='relative'>
                     <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                    <div className={`border-2 bg-[#fff] shadow-lg absolute p-4 ${dialog ? 'block' : 'hidden'}`}>
+                    <div className={`border-2 bg-[#fff] shadow-lg absolute right-0 p-4 ${dialog ? 'block' : 'hidden'}`}>
                         {
                             columnData.map((item) => {
                                 let active = columns.filter((col) => col.field === item.field);
