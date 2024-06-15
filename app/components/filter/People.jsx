@@ -26,6 +26,18 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
         setSelectedPeople(filterData)
     }
 
+    const handleValueClick = (value) => {
+        if(selectedPeople.includes(value)){
+            let filterData = selectedPeople.filter((item) => {
+                return item !== value;
+            })
+
+            setSelectedPeople(filterData)
+        }else {
+            setSelectedPeople([...selectedPeople, value])
+        }
+    }
+
 
 
     return (
@@ -55,7 +67,7 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
                     searchValue && searchList.map((item) => {
                         let active = selectedPeople.includes(item.payer);
                         return (
-                            <div className='cursor-pointer m-2 flex' onClick={() => setSelectedPeople([...selectedPeople, item.payer])}>
+                            <div className='cursor-pointer m-2 flex' onClick={() => handleValueClick(item.payer) }>
                                 {
                                     active ? '☑️' : '🔲'
                                 }
