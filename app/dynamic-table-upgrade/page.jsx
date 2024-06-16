@@ -168,7 +168,7 @@ const DynamicTableUpgrade = () => {
                         </svg>
                         Add Filters
                     </button>
-                    <div className={`border-2 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
+                    <div className={`border-2 z-50 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
                         <Filter />
                     </div>
                 </div>

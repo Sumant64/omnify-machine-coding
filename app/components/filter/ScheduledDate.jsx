@@ -48,8 +48,8 @@ const ScheduledDate = ({scheduledDate, setScheduledDate}) => {
         break;
       case 'ThisYear':
         let currentYr = new Date().getFullYear();
-        to = new Date(`01-01-${currentYr}`)
-        from = new Date(`12-31-${currentYr}`);
+        from = new Date(`01-01-${currentYr}`);
+        to = new Date(`12-31-${currentYr}`);
         setScheduledDate({from, to, field: 'ThisYear'});
         break;
       case 'LastYear':
