@@ -9,8 +9,14 @@ import { CiCalendar } from "react-icons/ci";
 import { RxPerson } from "react-icons/rx";
 import { RiRecordCircleLine } from "react-icons/ri";
 import { HiOutlineHashtag } from "react-icons/hi";
+import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const columnData = [
+    {
+        field: '',
+        display: true,
+        svg: <MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px]' />
+    },
     {
         field: 'ID',
         display: true,
@@ -250,6 +256,7 @@ const DynamicTableUpgrade = () => {
 
                                         return (
                                             <tr className={`border-b-2 ${index % 2 === 0 && 'bg-slate-50'}`}>
+                                                <td><MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px] ml-2' /></td>
                                                 <td className='p-2'>{item.id}</td>
                                                 {columns[1].display && <td className='min-w-[300px]'>{item.createdOn}</td>}
                                                 {columns[2].display && <td className='min-w-[250px]'>{item.payer}</td>}
