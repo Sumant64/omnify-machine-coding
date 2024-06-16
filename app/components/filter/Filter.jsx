@@ -3,7 +3,7 @@ import ScheduledDate from './ScheduledDate';
 import People from './People';
 import ServiceProducts from './ServiceProducts';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFilters } from '@/redux/actions/filterAction';
+import { removeAllFilters, updateFilters } from '@/redux/actions/filterAction';
 
 const Filter = () => {
   const [selection, setSelection] = useState(1);
@@ -38,6 +38,12 @@ const Filter = () => {
     dispatch(updateFilters(filterList))
   }
 
+  const resetFilter = () => {
+    dispatch(removeAllFilters());
+    setSelectedPeople([]);
+    setScheduledDate({from: '', to: '', field: ''});
+  }
+
   return (
     <div className='h-[400px] w-[700px]'>
       <div className='flex h-[350px] w-[700px]'>
@@ -58,7 +64,7 @@ const Filter = () => {
       {/* footer */}
       <div className="footer border-t-2 flex justify-end">
         <div className=''>
-          <button className='border-2 p-1 pl-4 pr-4 rounded-md'>Reset to Default</button>
+          <button onClick={() => resetFilter()} className='border-2 p-1 pl-4 pr-4 rounded-md'>Reset to Default</button>
           <button onClick={() => applyFilter()} className='border-2 p-1 pl-4 pr-4 bg-black text-white ml-3 rounded-md'>Apply</button>
         </div>
       </div>
