@@ -66,12 +66,13 @@ const DynamicTableUpgrade = () => {
 
     const loadInitial = () => {
         let data = mydata;
-        if(peopleFilter.length > 0) {
+        if (peopleFilter.length > 0) {
             data = data.filter((item) => {
                 return peopleFilter.includes(item.payer);
             })
         }
-        if(scheduledDateFilter.length > 0 && scheduledDateFilter[0] !== '') {
+        console.log(data);
+        if (scheduledDateFilter.length > 0 && scheduledDateFilter[0] !== '') {
             let from = new Date(scheduledDateFilter[0]);
             let to = new Date(scheduledDateFilter[1]);
 
@@ -80,6 +81,8 @@ const DynamicTableUpgrade = () => {
                 return scheduled >= from && scheduled <= to;
             })
         }
+        setPage(1)
+        setRowsPerPage(10)
 
         setRows(data);
     }
@@ -88,7 +91,7 @@ const DynamicTableUpgrade = () => {
         setLoading(true);
         if (item.display) {
             setColumns(columns.map((val) => {
-                if(val.field === item.field){
+                if (val.field === item.field) {
 
                     val.display = false
                 }
@@ -96,13 +99,13 @@ const DynamicTableUpgrade = () => {
             }))
         } else {
             setColumns(columns.map((val) => {
-                if(val.field === item.field){
+                if (val.field === item.field) {
 
                     val.display = true
                 }
                 return val;
             }))
-            
+
         }
 
         setLoading(false);
@@ -124,7 +127,7 @@ const DynamicTableUpgrade = () => {
     }
 
     const selectPageHandler = (selectPage) => {
-        if(selectPage >= 1 && selectPage <= rows.length / rowsPerPage && selectPage !== page) {
+        if (selectPage >= 1 && selectPage <= rows.length / rowsPerPage && selectPage !== page) {
             setPage(selectPage);
         }
     }
@@ -139,45 +142,48 @@ const DynamicTableUpgrade = () => {
     return (
         <div className='m-4'>
             <h1 className='text-3xl font-bold'>Waitlist</h1>
-            <div className='flex gap-4 mt-5'>
-                <p className='border-2 flex-1 p-3 rounded-xl'>All Waitlist <span>100</span></p>
-                <p className='border-2 flex-1 p-3 rounded-xl'>Newly Added <span>50</span></p>
-                <p className='border-2 flex-1 p-3 rounded-xl'>Leads <span>20</span></p>
-            </div>
-            <div className='text-right mt-4'>
-                <input className=' rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event.target.value)} />
+            <div className='flex flex-col gap-1 sm:flex-row sm:gap-4 mt-5 flex-wrap '>
+                <p className='border-2 flex-1 p-3 rounded-xl '>All Waitlist <span>100</span></p>
+                <p className='border-2 flex-1 p-3 rounded-xl '>Newly Added <span>50</span></p>
+                <p className='border-2 flex-1 p-3 rounded-xl '>Leads <span>20</span></p>
             </div>
 
             {/* filters */}
-            <div className="filters flex justify-between mt-4">
+            <div className="filters flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between mt-4">
                 <div className="filters">
-                <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => {setFilterDialog(!filterDialog); setSearchClient('')}}>Filters</button>
-                <div className={`border-2 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
-                    <Filter />
-                </div>
-                </div>
-                <div className='relative'>
-                    <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
-                    <div className={`border-2 bg-[#fff] shadow-lg absolute right-0 p-4 ${dialog ? 'block' : 'hidden'}`}>
-                        {
-                            columnData.map((item) => {
-                                let active = columns.filter((col) => col.field === item.field);
-                                active = active[0].display
-                                return (
-                                    <div className='flex gap-2'>
-                                        <div className="check relative top-2">
-                                            {
-                                                active ? 'T' : 'F'
-                                            }
-                                        </div>
-                                        <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
-                                            {item.field}
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                    <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => { setFilterDialog(!filterDialog); setSearchClient('') }}>Filters</button>
+                    <div className={`border-2 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
+                        <Filter />
                     </div>
+                </div>
+                <div className='flex flex-col sm:flex-row gap-2'>
+                    <div className=''>
+                        <input className='w-[100%] sm:w-[200px] rounded-xl p-[6px] shadow-md' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event.target.value)} />
+                    </div>
+                    <div className='relative'>
+                        <button className='border-2 rounded-xl p-[6px] bg-slate-100' onClick={() => setDialog(!dialog)}>Dynamic columns</button>
+                        <div className={`border-2 bg-[#fff] shadow-lg absolute right-0 p-4 ${dialog ? 'block' : 'hidden'}`}>
+                            {
+                                columnData.map((item) => {
+                                    let active = columns.filter((col) => col.field === item.field);
+                                    active = active[0].display
+                                    return (
+                                        <div className='flex gap-2'>
+                                            <div className="check relative top-2">
+                                                {
+                                                    active ? 'T' : 'F'
+                                                }
+                                            </div>
+                                            <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
+                                                {item.field}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -191,7 +197,7 @@ const DynamicTableUpgrade = () => {
                                 <tr>
                                     {
                                         columns.map((item) => {
-                                            if(item.display) {
+                                            if (item.display) {
                                                 return (
                                                     <th className='text-start p-2 bg-slate-100'>{item.field}</th>
                                                 )
@@ -226,8 +232,8 @@ const DynamicTableUpgrade = () => {
 
             <div className='flex justify-between'>
                 <div className="rows mt-3">
-                    Display 
-                    <select value={rowsPerPage.toString()} onChange={(event) => {setRowsPerPage(+event.target.value); setPage(1)}}>
+                    Display
+                    <select value={rowsPerPage.toString()} onChange={(event) => { setRowsPerPage(+event.target.value); setPage(1) }}>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
@@ -241,10 +247,10 @@ const DynamicTableUpgrade = () => {
                         <span onClick={() => selectPageHandler(page - 1)} className='border-2 p-3 cursor-pointer'>Prev</span>
                         {
                             [...Array(Math.ceil(rows.length / rowsPerPage))].map((_, i) => {
-                                if(i === (page-1) - 1 || i === (page-1) || i === (page-1) + 1){
-                                return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i+1 ? 'bg-[#e2e2e2]': ''}`}>
-                                    {i + 1}
-                                </span>
+                                if (i === (page - 1) - 1 || i === (page - 1) || i === (page - 1) + 1) {
+                                    return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i + 1 ? 'bg-[#e2e2e2]' : ''}`}>
+                                        {i + 1}
+                                    </span>
                                 }
                             })
                         }
