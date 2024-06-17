@@ -74,7 +74,8 @@ const DynamicTableUpgrade = () => {
             }
             return val;
         })
-        setColumns(newColumns)
+        setDialog(false);
+        setColumns(newColumns);
         setLoading(false);
     }
 
@@ -84,7 +85,7 @@ const DynamicTableUpgrade = () => {
             val.display = true;
             return val;
         }));
-
+        setDialog(false);
     }
 
     const handleSearch = (searchValue) => {
@@ -160,6 +161,7 @@ const DynamicTableUpgrade = () => {
                             </button>
                             <CustomSelectBar
                                 openDialog={dialog}
+                                setOpenDialog={setDialog}
                                 heading={'Edit Column'}
                                 subheading={'Select the column to rearrange'}
                                 options={['Created On', 'Payer', 'Status', 'Email', 'Payer Phone', 'Services', 'Scheduled']}
