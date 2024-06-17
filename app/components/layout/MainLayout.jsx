@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar';
 import { IoMenuOutline } from "react-icons/io5";
 
 
 const MainLayout = (props) => {
     const [toggle, setToggle] = useState(false);
-    const [innerwidth, setInnerwidth] = useState(window.innerWidth);
-    console.log(innerwidth)
+    const [innerwidth, setInnerwidth] = useState(undefined);
+    
+    useEffect(() => {
+        setInnerwidth(window.innerWidth);
+    }, [])
 
 
   return (
@@ -16,7 +20,7 @@ const MainLayout = (props) => {
             <div className={`bg-slate-100 z-50 transition-all duration-500 absolute h-[100vh] shadow-lg sm:shadow-none sm:static sm:block overflow-hidden ${toggle ? 'w-[228px]' : 'w-[0px] sm:w-[64px]'}`}>
                 <Sidebar toggle={toggle} setToggle={setToggle} />
             </div>
-            <div style={{flex: '5'}} onClick={() => innerwidth < 480 && setToggle(false)}>
+            <div style={{flex: '5'}} onClick={() =>  innerwidth && innerwidth < 480 && setToggle(false)}>
                 {props.children}
             </div>
         </div>
