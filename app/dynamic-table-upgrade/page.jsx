@@ -10,58 +10,14 @@ import { RxPerson } from "react-icons/rx";
 import { RiRecordCircleLine } from "react-icons/ri";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
-
-const columnData = [
-    {
-        field: '',
-        display: true,
-        svg: <MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'ID',
-        display: true,
-        svg: ''
-    },
-    {
-        field: 'Created On',
-        display: true,
-        svg: <CiCalendar className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Payer',
-        display: true,
-        svg: <RxPerson className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Status',
-        display: true,
-        svg: <RiRecordCircleLine className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Email',
-        display: true,
-        svg: <HiOutlineHashtag className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Payer Phone',
-        display: true,
-        svg: <HiOutlineHashtag className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Services',
-        display: true,
-        svg: <HiOutlineHashtag className='w-5 h-5 relative top-[2px]' />
-    },
-    {
-        field: 'Scheduled',
-        display: true,
-        svg: <CiCalendar className='w-5 h-5 relative top-[2px]' />
-    },
-]
+import { IoCheckbox } from "react-icons/io5";
+import { columnData } from '@/util/config/tableHeader';
+import CustomSelectBar from '../components/common/CustomSelectBar';
 
 const DynamicTableUpgrade = () => {
     const [rows, setRows] = useState([]);
-    const [columns, setColumns] = useState(columnData);
+    const [columns, setColumns] = useState([...columnData]);
+    const [columnFilter, setColumnFilter] = useState(['Created On', 'Payer', 'Status', 'Email', 'Payer Phone', 'Services', 'Scheduled']);
     const [dialog, setDialog] = useState(false);
     const [loading, setLoading] = useState(false);
     const [filterDialog, setFilterDialog] = useState(false);
@@ -82,7 +38,6 @@ const DynamicTableUpgrade = () => {
                 return peopleFilter.includes(item.payer);
             })
         }
-        console.log(data);
         if (scheduledDateFilter.length > 0 && scheduledDateFilter[0] !== '') {
             let from = new Date(scheduledDateFilter[0]);
             let to = new Date(scheduledDateFilter[1]);
@@ -99,27 +54,37 @@ const DynamicTableUpgrade = () => {
     }
 
     const handleColumn = (item) => {
-        setLoading(true);
-        if (item.display) {
-            setColumns(columns.map((val) => {
-                if (val.field === item.field) {
 
-                    val.display = false
-                }
-                return val;
-            }))
+        if (columnFilter.includes(item)) {
+            setColumnFilter((prev) => prev.filter((val) => val !== item))
         } else {
-            setColumns(columns.map((val) => {
-                if (val.field === item.field) {
-
-                    val.display = true
-                }
-                return val;
-            }))
-
+            setColumnFilter([...columnFilter, item])
         }
+    }
 
+    const handleApply = () => {
+        setLoading(true);
+        let newColumns = columns.map((val) => {
+            if (val.field !== '' && val.field !== 'ID') {
+                if (columnFilter.includes(val.field)) {
+                    val.display = true;
+                } else {
+                    val.display = false;
+                }
+            }
+            return val;
+        })
+        setColumns(newColumns)
         setLoading(false);
+    }
+
+    const handleDefault = () => {
+        setColumnFilter(['Created On', 'Payer', 'Status', 'Email', 'Payer Phone', 'Services', 'Scheduled']);
+        setColumns(columns.map((val) => {
+            val.display = true;
+            return val;
+        }));
+
     }
 
     const handleSearch = (searchValue) => {
@@ -193,26 +158,16 @@ const DynamicTableUpgrade = () => {
                                     <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5zM1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5H5V1zM10 15V1H6v14zm1 0h3.5a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5H11z" />
                                 </svg>
                             </button>
-                            <div className={`border-2 bg-[#fff] shadow-lg absolute right-0 p-4 ${dialog ? 'block' : 'hidden'}`}>
-                                {
-                                    columnData.map((item) => {
-                                        let active = columns.filter((col) => col.field === item.field);
-                                        active = active[0].display
-                                        return (
-                                            <div className='flex gap-2'>
-                                                <div className="check relative top-2">
-                                                    {
-                                                        active ? 'T' : 'F'
-                                                    }
-                                                </div>
-                                                <div className='border-[1px] m-1 pl-3 cursor-pointer rounded-md p-1 w-[200px]' onClick={() => handleColumn(item)}>
-                                                    {item.field}
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
+                            <CustomSelectBar
+                                openDialog={dialog}
+                                heading={'Edit Column'}
+                                subheading={'Select the column to rearrange'}
+                                options={['Created On', 'Payer', 'Status', 'Email', 'Payer Phone', 'Services', 'Scheduled']}
+                                handleColumn={handleColumn}
+                                activeColumns={columnFilter}
+                                handleApply={handleApply}
+                                handleDefault={handleDefault}
+                            />
                         </div>
 
                         {/* download icons */}
@@ -241,7 +196,7 @@ const DynamicTableUpgrade = () => {
                                                 return (
                                                     <th className='text-start p-2 bg-slate-100'>
                                                         <div className='flex gap-2'>
-                                                        {item.svg}{item.field}
+                                                            {item.svg}{item.field}
                                                         </div>
                                                     </th>
                                                 )
@@ -258,13 +213,13 @@ const DynamicTableUpgrade = () => {
                                             <tr className={`border-b-2 ${index % 2 === 0 && 'bg-slate-50'}`}>
                                                 <td><MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px] ml-2' /></td>
                                                 <td className='p-2'>{item.id}</td>
-                                                {columns[1].display && <td className='min-w-[300px]'>{item.createdOn}</td>}
-                                                {columns[2].display && <td className='min-w-[250px]'>{item.payer}</td>}
-                                                {columns[3].display && <td className='min-w-[150px]'>{item.status}</td>}
-                                                {columns[4].display && <td className='min-w-[250px]'>{item.email}</td>}
-                                                {columns[7].display && <td className='min-w-[250px]'>{item.payerPhone}</td>}
-                                                {columns[5].display && <td className='min-w-[250px]'>{item.services}</td>}
-                                                {columns[6].display && <td className='min-w-[250px] pr-2'>{item.scheduled}</td>}
+                                                {columns[2].display && <td className='min-w-[300px]'>{item.createdOn}</td>}
+                                                {columns[3].display && <td className='min-w-[250px]'>{item.payer}</td>}
+                                                {columns[4].display && <td className='min-w-[150px]'>{item.status}</td>}
+                                                {columns[5].display && <td className='min-w-[250px]'>{item.email}</td>}
+                                                {columns[6].display && <td className='min-w-[250px]'>{item.payerPhone}</td>}
+                                                {columns[7].display && <td className='min-w-[250px]'>{item.services}</td>}
+                                                {columns[8].display && <td className='min-w-[250px] pr-2'>{item.scheduled}</td>}
                                             </tr>
                                         )
                                     })

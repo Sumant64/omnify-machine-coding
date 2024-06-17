@@ -1,4 +1,4 @@
-import { searchPeople } from '@/app/service/search';
+import { searchPeople } from '@/service/search';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
@@ -18,7 +18,6 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
     }
 
     const handleRemove = (item) => {
-        console.log(item)
         let filterData = selectedPeople.filter((val) => {
             return val !== item
         })
