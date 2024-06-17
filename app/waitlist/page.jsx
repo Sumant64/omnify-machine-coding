@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import mydata from '../../data/data.json';
-import '../dynamic-table/style.css';
 import Filter from '../components/filter/Filter';
 import { useSelector } from 'react-redux';
 import { TfiReload } from "react-icons/tfi";
