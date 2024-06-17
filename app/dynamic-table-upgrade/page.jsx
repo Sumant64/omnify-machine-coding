@@ -117,7 +117,7 @@ const DynamicTableUpgrade = () => {
 
 
     return (
-        <div className='m-4'>
+        <div className='m-4 bg-[#fff] p-4 rounded-md'>
             <h1 className='text-3xl font-bold'>Waitlist</h1>
             <div className='flex flex-col gap-1 sm:flex-row sm:gap-4 mt-5 flex-wrap '>
                 <p className='border-2 flex-1 p-3 rounded-xl '>All Waitlist <span>100</span></p>
@@ -184,12 +184,11 @@ const DynamicTableUpgrade = () => {
                 </div>
 
             </div>
-            <div className='flex justify-center'>
-                <div className='w-[100%] overflow-auto'>
-
-                    {
-                        !loading &&
-                        <table className='rounded-xl border-2 w-full mt-3'>
+            <div className='flex'>
+                {
+                    !loading &&
+                    <div className='w-[80vw] overflow-auto'>
+                        <table className='rounded-xl border-2 mt-3'>
                             <thead className='border-b-2 text-start'>
                                 <tr>
                                     {
@@ -228,8 +227,8 @@ const DynamicTableUpgrade = () => {
                                 }
                             </tbody>
                         </table>
-                    }
-                </div>
+                    </div>
+                }
             </div>
 
             <div className='flex justify-between'>
