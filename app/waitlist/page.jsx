@@ -134,8 +134,8 @@ const DynamicTableUpgrade = () => {
                         </svg>
                         Add Filters
                     </button>
-                    <div className={`border-2 z-50 bg-[#fff] shadow-lg absolute ${filterDialog ? 'block' : 'hidden'}`}>
-                        <Filter />
+                    <div className={`border-2 z-50 bg-[#fff] w-[100vw] h-[100vh] sm:w-auto sm:h-auto fixed top-0 left-0 sm:left-auto sm:top-auto shadow-lg sm:absolute ${filterDialog ? 'block' : 'hidden'}`}>
+                        <Filter filterDialog={filterDialog} setFilterDialog={setFilterDialog} />
                     </div>
                 </div>
                 <div className='flex flex-col sm:flex-row gap-3'>
