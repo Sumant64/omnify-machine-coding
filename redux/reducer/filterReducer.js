@@ -1,7 +1,8 @@
 
 const emptyFilter = {
     people: [],
-    scheduledDate: []
+    scheduledDate: [],
+    service: []
 }
 
 const initialState = {

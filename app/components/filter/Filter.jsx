@@ -11,6 +11,7 @@ const Filter = ({filterDialog, setFilterDialog}) => {
   const [selectedPeople, setSelectedPeople] = useState([]);
   const [scheduledDate, setScheduledDate] = useState({from: '', to: '', field: ''})
   const peopleFilter = useSelector((state) => state.filterReducer.filters.people);
+  const [selectedService, setSelectedService] = useState([]);
   const dispatch = useDispatch();
 
 
@@ -26,14 +27,15 @@ const Filter = ({filterDialog, setFilterDialog}) => {
       case 2:
         return <People selectedPeople={selectedPeople} setSelectedPeople={setSelectedPeople} />
       case 3:
-        return <ServiceProducts />
+        return <ServiceProducts selectedService={selectedService} setSelectedService={setSelectedService} />
     }
   }
 
   const applyFilter = () => {
     let filterList = {
       people: selectedPeople,
-      scheduledDate: [scheduledDate.from, scheduledDate.to, scheduledDate.field]
+      scheduledDate: [scheduledDate.from, scheduledDate.to, scheduledDate.field],
+      service: selectedService
     }
 
     dispatch(updateFilters(filterList));

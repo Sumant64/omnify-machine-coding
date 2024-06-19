@@ -25,11 +25,12 @@ const DynamicTableUpgrade = () => {
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const peopleFilter = useSelector((state) => state.filterReducer.filters.people);
+    const serviceFilter = useSelector((state) => state.filterReducer.filters.service);
     const scheduledDateFilter = useSelector((state) => state.filterReducer.filters.scheduledDate);
 
     useEffect(() => {
         loadInitial();
-    }, [peopleFilter, scheduledDateFilter]);
+    }, [peopleFilter, scheduledDateFilter, serviceFilter]);
 
     const loadInitial = () => {
         let data = mydata;
@@ -45,6 +46,11 @@ const DynamicTableUpgrade = () => {
             data = data.filter((item) => {
                 let scheduled = new Date(item.scheduled);
                 return scheduled >= from && scheduled <= to;
+            })
+        }
+        if(serviceFilter.length > 0) {
+            data = data.filter((item) => {
+                return serviceFilter.includes(item.services);
             })
         }
         setPage(1)
