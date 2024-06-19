@@ -260,7 +260,7 @@ const DynamicTableUpgrade = () => {
                         {
                             [...Array(Math.ceil(rows.length / rowsPerPage))].map((_, i) => {
                                 if (i === (page - 1) - 1 || i === (page - 1) || i === (page - 1) + 1) {
-                                    return <span key={i} className={`p-0 sm:p-2 pl-4 pr-4 border-2 ${page === i + 1 ? 'bg-[#e2e2e2]' : ''}`}>
+                                    return <span key={i} className={`p-2 pl-4 pr-4 border-2 ${page === i + 1 ? 'bg-[#e2e2e2]' : ''}`}>
                                         {i + 1}
                                     </span>
                                 }
