@@ -13,6 +13,7 @@ import { IoCheckbox } from "react-icons/io5";
 import { columnData } from '@/util/config/tableHeader';
 import CustomSelectBar from '../components/common/CustomSelectBar';
 import { GoDotFill } from "react-icons/go";
+import { dateFormat } from '@/util/date';
 
 const DynamicTableUpgrade = () => {
     const [rows, setRows] = useState([]);
@@ -215,12 +216,14 @@ const DynamicTableUpgrade = () => {
                             <tbody>
                                 {
                                     rows.slice(page * rowsPerPage - rowsPerPage, page * rowsPerPage).map((item, index) => {
+                                        let createDate = dateFormat(item.createdOn);
+                                        let scheduledDate = dateFormat(item.scheduled);
 
                                         return (
                                             <tr className={`border-b-2 ${index % 2 === 0 && 'bg-slate-50'}`}>
                                                 <td><MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px] ml-2' /></td>
                                                 <td className='p-2'>{item.id}</td>
-                                                {columns[2].display && <td className='min-w-[300px]'>{item.createdOn}</td>}
+                                                {columns[2].display && <td className='min-w-[300px]'>{createDate}</td>}
                                                 {columns[3].display && <td className='min-w-[250px]'>{item.payer}</td>}
                                                 {columns[4].display && <td className='min-w-[150px]'>
                                                     <div className={`flex gap-2 border-2 rounded-full w-[100px] pl-2 ${item.status === 'Inactive' && 'bg-[#e2e2e2]'} ${item.status === 'Lead' && 'bg-blue-100'} ${item.status === 'Active' && 'bg-green-300'}`}>
@@ -231,7 +234,7 @@ const DynamicTableUpgrade = () => {
                                                 {columns[5].display && <td className='min-w-[250px]'>{item.email}</td>}
                                                 {columns[6].display && <td className='min-w-[250px]'>{item.payerPhone}</td>}
                                                 {columns[7].display && <td className='min-w-[250px]'>{item.services}</td>}
-                                                {columns[8].display && <td className='min-w-[250px] pr-2'>{item.scheduled}</td>}
+                                                {columns[8].display && <td className='min-w-[250px] pr-2'>{scheduledDate}</td>}
                                             </tr>
                                         )
                                     })
