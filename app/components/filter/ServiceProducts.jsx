@@ -41,7 +41,7 @@ const ServiceProducts = ({selectedService, setSelectedService}) => {
   return (
     <>
       <div className='p-4'>
-        <input value={searchValue} onChange={(e) => handleChange(e)} className='w-full p-2 rounded-md border-2 bg-gray-50' type="text" placeholder='Search Payer' />
+        <input value={searchValue} onChange={(e) => handleChange(e)} className='w-full p-2 rounded-md border-2 bg-gray-50' type="text" placeholder='Search Service' />
 
         {/* Values */}
         <div>
