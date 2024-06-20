@@ -4,12 +4,7 @@ import mydata from '../../data/data.json';
 import Filter from '../components/filter/Filter';
 import { useSelector } from 'react-redux';
 import { TfiReload } from "react-icons/tfi";
-import { CiCalendar } from "react-icons/ci";
-import { RxPerson } from "react-icons/rx";
-import { RiRecordCircleLine } from "react-icons/ri";
-import { HiOutlineHashtag } from "react-icons/hi";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
-import { IoCheckbox } from "react-icons/io5";
 import { columnData } from '@/util/config/tableHeader';
 import CustomSelectBar from '../components/common/CustomSelectBar';
 import { GoDotFill } from "react-icons/go";
@@ -129,7 +124,7 @@ const DynamicTableUpgrade = () => {
             {/* filters */}
             <div className="filters flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between mt-4">
                 <div className="filters">
-                    <button className='border-2 rounded-xl p-[6px] bg-slate-100 flex' onClick={() => { setFilterDialog(!filterDialog); setSearchClient('') }}>
+                    <button  aria-label='filter' className='border-2 rounded-xl p-[6px] bg-slate-100 flex' onClick={() => { setFilterDialog(!filterDialog); setSearchClient('') }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-funnel relative top-1 mr-2" viewBox="0 0 16 16">
                             <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z" />
                         </svg>
@@ -147,7 +142,7 @@ const DynamicTableUpgrade = () => {
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                             </svg>
                         </div>
-                        <input className='pl-2 w-full border-none outline-none' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event.target.value)} />
+                        <input aria-label='Search by client name' className='pl-2 w-full border-none outline-none' type="text" placeholder='Search Client' value={searchClient} onChange={(event) => handleSearch(event.target.value)} />
                     </div>
                     {/* column filter */}
                     <div className='flex gap-3'>
@@ -187,11 +182,11 @@ const DynamicTableUpgrade = () => {
             </div>
 
             {/* table section */}
-            <div className='flex'>
+            <section className='flex'>
                 {
                     !loading &&
                     <div className='w-[80vw] overflow-auto'>
-                        <table className='rounded-xl border-2 mt-3'>
+                        <table aria-label='Waitlist' className='rounded-xl border-2 mt-3'>
                             <thead className='border-b-2 text-start'>
                                 <tr>
                                     {
@@ -239,7 +234,7 @@ const DynamicTableUpgrade = () => {
                         </table>
                     </div>
                 }
-            </div>
+            </section>
 
             {/* Table Pagination section */}
             <div className='flex flex-col-reverse sm:flex-row justify-between'>

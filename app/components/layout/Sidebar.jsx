@@ -8,6 +8,7 @@ import { CgSandClock } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { CiCircleQuestion } from "react-icons/ci";
 import { LuLayoutDashboard } from "react-icons/lu";
+import Link from 'next/link';
 
 
 const Sidebar = ({ toggle, setToggle }) => {
@@ -24,11 +25,11 @@ const Sidebar = ({ toggle, setToggle }) => {
                     <IoMenuOutline onClick={() => setToggle(!toggle)} className='hidden sm:block w-8 h-8 relative top-[2px] ml-2' />
                 </div>
                 {/* Top Links */}
-                <ul>
-                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><IoFileTrayOutline className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Order</span></a></li>
-                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><TbCopyCheck className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Subscription</span></a></li>
-                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><IoCalendarOutline className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Calendar</span></a></li>
-                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'} bg-[#fff] rounded-lg`} href="#"><CgSandClock className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Waitlist</span></a></li>
+                <ul role='navigation'>
+                    <li aria-label='Order'><Link className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="/"><IoFileTrayOutline className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Order</span></Link></li>
+                    <li aria-label='Subscription'><Link className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="/"><TbCopyCheck className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Subscription</span></Link></li>
+                    <li aria-label='Calendar'><Link className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="/"><IoCalendarOutline className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Calendar</span></Link></li>
+                    <li aria-label='Waitlist'><Link className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'} bg-[#fff] rounded-lg`} href="/"><CgSandClock className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Waitlist</span></Link></li>
                 </ul>
             </div>
 
@@ -42,7 +43,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                         </div>
                         <MdLogout className={`w-6 h-6 relative top-[2px] ${toggle ? 'mr-0' : 'mr-3'}`} />
                     </a></li>
-                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 bg-[#fff] rounded-lg ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><img className='rounded-full w-10 h-10' src="https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_640.png" alt="profile" /><span><div className={` ${toggle ? 'block' : 'hidden'}`}><p>Admin Name</p><p>adminname@mail.com</p></div></span></a></li>
+                    <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 bg-[#fff] rounded-lg ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><img className='rounded-full w-10 h-10' src="https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_640.png" alt="profile" /><span><div className={` ${toggle ? 'block' : 'hidden'}`}><p>Admin Name</p><p>admin@mail.com</p></div></span></a></li>
                     <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><CiCircleQuestion className={`w-6 h-6 relative ${toggle ? 'ml-0 top-4' : 'ml-2 top-[2px]'}`} /> <div className={` ${toggle ? 'block' : 'hidden'}`}><p>Help Center</p><p>@2024 Omnify.Inc</p></div></a></li>
                 </ul>
             </div>
