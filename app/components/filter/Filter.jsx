@@ -23,10 +23,13 @@ const Filter = ({filterDialog, setFilterDialog}) => {
   const getActiveFilter = () => {
     switch(selection){
       case 1:
+        // scheduled date filter
         return <ScheduledDate scheduledDate={scheduledDate} setScheduledDate={setScheduledDate} />
       case 2:
+        // people filter
         return <People selectedPeople={selectedPeople} setSelectedPeople={setSelectedPeople} />
       case 3:
+        // service filter
         return <ServiceProducts selectedService={selectedService} setSelectedService={setSelectedService} />
     }
   }

@@ -116,12 +116,6 @@ const DynamicTableUpgrade = () => {
         }
     }
 
-    // const handleDialogCloseOutside = () => {
-    //     if(dialog === true && mounseUnderDialog === false) {
-    //         setDialog(false)
-    //     }
-    // }
-
 
     return (
         <div className='m-4 bg-[#fff] p-4 rounded-md'>
@@ -191,6 +185,8 @@ const DynamicTableUpgrade = () => {
                 </div>
 
             </div>
+
+            {/* table section */}
             <div className='flex'>
                 {
                     !loading &&
@@ -245,6 +241,7 @@ const DynamicTableUpgrade = () => {
                 }
             </div>
 
+            {/* Table Pagination section */}
             <div className='flex flex-col-reverse sm:flex-row justify-between'>
                 <div className="rows mt-0 sm:mt-3">
                     Display

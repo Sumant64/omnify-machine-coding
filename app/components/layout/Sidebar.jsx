@@ -23,6 +23,7 @@ const Sidebar = ({ toggle, setToggle }) => {
                     </div>
                     <IoMenuOutline onClick={() => setToggle(!toggle)} className='hidden sm:block w-8 h-8 relative top-[2px] ml-2' />
                 </div>
+                {/* Top Links */}
                 <ul>
                     <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><IoFileTrayOutline className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Order</span></a></li>
                     <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#"><TbCopyCheck className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Subscription</span></a></li>
@@ -30,6 +31,8 @@ const Sidebar = ({ toggle, setToggle }) => {
                     <li><a className={`flex gap-3 pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'} bg-[#fff] rounded-lg`} href="#"><CgSandClock className={`w-6 h-6 relative top-[2px] ${toggle ? 'ml-0' : 'ml-2'}`} /> <span className={`${toggle ? 'block' : 'hidden'}`}>Waitlist</span></a></li>
                 </ul>
             </div>
+
+            {/* Bottom Links */}
             <div className='relative bottom-0'>
                 <ul>
                     <li><a className={`flex gap-3 justify-between pt-2 pb-2 mt-2 mb-2 ${toggle ? 'ml-0' : 'ml-2'}`} href="#">
