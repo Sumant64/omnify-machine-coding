@@ -43,12 +43,6 @@ const ScheduledDate = ({ scheduledDate, setScheduledDate }) => {
         to = new Date();
         setScheduledDate({ from, to, field: 'ThisMonth' })
         break;
-      case 'LastMonth':
-        break;
-      case 'ThisQuarter':
-        break;
-      case '2QuarterAgo':
-        break;
       case 'ThisYear':
         let currentYr = new Date().getFullYear();
         from = new Date(`01-01-${currentYr}`);
