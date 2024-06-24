@@ -193,7 +193,7 @@ const DynamicTableUpgrade = () => {
                                         columns.map((item) => {
                                             if (item.display) {
                                                 return (
-                                                    <th className='text-start p-2 bg-slate-100'>
+                                                    <th className={`text-start p-2 bg-slate-100 ${item.field === 'ID' && 'sticky left-0'}`}>
                                                         <div className='flex gap-2'>
                                                             {item.svg}{item.field}
                                                         </div>
@@ -213,7 +213,7 @@ const DynamicTableUpgrade = () => {
                                         return (
                                             <tr className={`border-b-2 ${index % 2 === 0 && 'bg-slate-50'}`}>
                                                 <td><MdCheckBoxOutlineBlank className='w-5 h-5 relative top-[2px] ml-2' /></td>
-                                                <td className='p-2'>{item.id}</td>
+                                                <td className={`p-2 sticky left-0 ${index % 2 === 0 ? 'bg-slate-50' : 'bg-[#fff]'}`}>{item.id}</td>
                                                 {columns[2].display && <td className='min-w-[300px]'>{createDate}</td>}
                                                 {columns[3].display && <td className='min-w-[250px]'>{item.payer}</td>}
                                                 {columns[4].display && <td className='min-w-[150px]'>
